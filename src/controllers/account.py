@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from lxml import etree
 
 from src.config import xml_file
-from src.controllers.io import parse_xml, write_xml
+from src.controllers.io import parse_xml, write_xml, next_gen_id
 
 
 account_bp = Blueprint('account', __name__)
@@ -29,16 +29,21 @@ def get_accounts():
 # Route to add a new account
 @account_bp.route('/', methods=['POST'])
 def add_account():
-    data = request.json
     tree = parse_xml(xml_file)
     root = tree.getroot()
     accounts_element = root.find('Accounts')
 
+    new_account_id = next_gen_id(elements=accounts_element,
+                                 type_element="Account")
+    account_name = request.args.get('accountName')
+    account_type = request.args.get('accountType')
+    balance = request.args.get('balance')
+
     new_account = etree.SubElement(accounts_element, 'Account')
-    etree.SubElement(new_account, 'AccountID').text = str(data['AccountID'])
-    etree.SubElement(new_account, 'AccountName').text = data['AccountName']
-    etree.SubElement(new_account, 'AccountType').text = data['AccountType']
-    etree.SubElement(new_account, 'Balance').text = str(data['Balance'])
+    etree.SubElement(new_account, 'AccountID').text = str(new_account_id)
+    etree.SubElement(new_account, 'AccountName').text = account_name
+    etree.SubElement(new_account, 'AccountType').text = account_type
+    etree.SubElement(new_account, 'Balance').text = str(balance)
 
     write_xml(tree, xml_file)
     return jsonify({'message': 'Account added successfully'})

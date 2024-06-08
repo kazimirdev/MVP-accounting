@@ -12,6 +12,19 @@
 </head>
 <body>
     <h1>Accounting Data Management</h1>
+
+    <h2>Create Account</h2>
+    <form id="create-account-form" method="post">
+        <label for="account-name">Account Name:</label><br>
+        <input type="text" id="account-name" name="account-name"><br>
+        <label for="account-type">Account Type:</label><br>
+        <input type="text" id="account-type" name="account-type"><br>
+        <label for="balance">Balance:</label><br>
+        <input type="text" id="balance" name="balance"><br><br>
+        <button type="button" onclick="createAccount()">Create Account</button>
+    </form>
+
+    <hr>
     <h2>Accounts</h2>
     <select id="account-selector">
         <option value="">Select an account</option>
@@ -101,6 +114,37 @@
                     fetchTransactions();
                 });
             }
+        }
+
+        function createAccount() {
+            const accountName = document.getElementById('account-name').value;
+            const accountType = document.getElementById('account-type').value;
+            const balance = document.getElementById('balance').value;
+
+            fetch(`/account?accountName=${accountName}&accountType=${accountType}&balance=${balance}`, {
+                    method: 'POST'
+                  })
+            .then(response => response.json())
+            .then(data => {
+                alert(`${data.message}`);
+            fetchAccounts();
+            });
+        }
+
+        function createTransaction() {
+            const date = document.getElementById('date').value;
+            const description = document.getElementById('description').value;
+            const amount = document.getElementById('amount').value;
+            const accountID = document.getElementById('account-id').value;
+            const type = document.getElementById('type').value;
+
+                fetch(`/transaction?date=${date}&description=${description}&amount=${amount}&accountID=${accountID}&type=${type}`, {
+                    method: 'POST'
+                }).then(response => response.json())
+                .then(data => {
+                    alert(`${data.message} New Transaction ID: ${data.TransactionID}`);
+                    fetchTransactions();
+                });
         }
 
         window.onload = function() {
