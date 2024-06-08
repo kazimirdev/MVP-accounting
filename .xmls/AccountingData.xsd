@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- Root Element -->
+  <xs:element name="AccountingData">
+    <xs:complexType>
+        <xs:sequence>
+            <!-- Accounts Element -->
+            <xs:element name="Accounts">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Account" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="AccountID" type="xs:integer"/>
+                                    <xs:element name="AccountName" type="xs:string"/>
+                                    <xs:element name="AccountType" type="xs:string"/>
+                                    <xs:element name="Balance" type="xs:decimal"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            
+            <!-- Transactions Element -->
+            <xs:element name="Transactions">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Transaction" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="TransactionID" type="xs:integer"/>
+                                    <xs:element name="Date" type="xs:date"/>
+                                    <xs:element name="Description" type="xs:string"/>
+                                    <xs:element name="Amount" type="xs:decimal"/>
+                                    <xs:element name="AccountID" type="xs:integer"/>
+                                    <xs:element name="Type" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            
+        </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>
+

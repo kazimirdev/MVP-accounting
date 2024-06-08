@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounting App</title>
+    <style>
+        #account-menu {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Accounting Data Management</h1>
+    <h2>Accounts</h2>
+    <select id="account-selector">
+        <option value="">Select an account</option>
+    </select>
+    <button onclick="openAccountMenu()">Open Account Menu</button>
+
+    <div id="account-menu">
+        <h3>Account Menu</h3>
+        <button onclick="fetchAccountTransactions()">View Transactions</button>
+        <button onclick="deleteSelectedAccount()">Delete Account</button>
+        <!-- You can add more buttons here for additional functionalities like updating an account -->
+    </div>
+
+    <h2>All Transactions</h2>
+    <ul id="transactions-list"></ul>
+
+    <script>
+        function fetchAccounts() {fetch('/account')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch accounts');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const accountSelector = document.getElementById('account-selector');
+            accountSelector.innerHTML = '<option value="">Select an account</option>';
+            data.forEach(account => {
+                const option = document.createElement('option');
+                option.value = account.AccountID;
+                option.textContent = `ID: ${account.AccountID}, Name: ${account.AccountName}`;
+                accountSelector.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching accounts:', error);
+        });
+}
+        function fetchTransactions() {
+            fetch('/transaction')
+                .then(response => response.json())
+                .then(data => {
+                    const transactionsList = document.getElementById('transactions-list');
+                    transactionsList.innerHTML = '';
+                    data.forEach(transaction => {
+                        const li = document.createElement('li');
+                        li.textContent = `ID: ${transaction.TransactionID}, Date: ${transaction.Date}, Description: ${transaction.Description}, Amount: ${transaction.Amount}, Account ID: ${transaction.AccountID}, Type: ${transaction.Type}`;
+                        transactionsList.appendChild(li);
+                    });
+                });
+        }
+
+        function openAccountMenu() {
+            const accountMenu = document.getElementById('account-menu');
+            accountMenu.style.display = 'block';
+        }
+
+        function fetchAccountTransactions() {
+            const accountSelector = document.getElementById('account-selector');
+            const accountId = accountSelector.value;
+            if (accountId) {
+                fetch(`/transaction?account_id=${accountId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const transactionsList = document.getElementById('transactions-list');
+                        transactionsList.innerHTML = '';
+                        data.forEach(transaction => {
+                            const li = document.createElement('li');
+                            li.textContent = `ID: ${transaction.TransactionID}, Date: ${transaction.Date}, Description: ${transaction.Description}, Amount: ${transaction.Amount}, Account ID: ${transaction.AccountID}, Type: ${transaction.Type}`;
+                            transactionsList.appendChild(li);
+                        });
+                    });
+            }
+        }
+
+        function deleteSelectedAccount() {
+            const accountSelector = document.getElementById('account-selector');
+            const accountId = accountSelector.value;
+            if (accountId) {
+                fetch(`/account/${accountId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    fetchAccounts();
+                    fetchTransactions();
+                });
+            }
+        }
+
+        window.onload = function() {
+            fetchAccounts();
+            fetchTransactions();
+        };
+    </script>
+</body>
+</html>

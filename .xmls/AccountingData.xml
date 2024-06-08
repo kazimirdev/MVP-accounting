@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<AccountingData>
+  <Accounts>
+    <Account>
+      <AccountID>2</AccountID>
+      <AccountName>Accounts Receivable</AccountName>
+      <AccountType>Asset</AccountType>
+      <Balance>2000.00</Balance>
+    </Account>
+    <Account>
+      <AccountID>3</AccountID>
+      <AccountName>Accounts Payable</AccountName>
+      <AccountType>Liability</AccountType>
+      <Balance>1000.00</Balance>
+    </Account>
+  </Accounts>
+  <Transactions>
+    <Transaction>
+      <TransactionID>101</TransactionID>
+      <Date>2024-01-01</Date>
+      <Description>Invoice Payment</Description>
+      <Amount>1500.00</Amount>
+      <AccountID>2</AccountID>
+      <Type>Debit</Type>
+    </Transaction>
+    </Transactions>
+</AccountingData>
