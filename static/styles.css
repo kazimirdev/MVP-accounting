@@ -1,0 +1,28 @@
+#accountMenu {
+    display: none;
+}
+
+#allTransactionsList {
+    margin-left: 5%;
+}
+
+.tabcontent {
+    display: none;
+}
+
+.tabCreateAccount {
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 25%;
+    text-align: center;
+    margin-right: 1px;
+    float: left;
+    border: none;
+}
+
+.tablink:hover {
+    background-color: #000;
+}

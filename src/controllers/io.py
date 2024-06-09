@@ -1,6 +1,22 @@
 from lxml import etree
 
 
+def indent_xml(elem, level=0):
+    i = "\n" + level * "  "
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = i + "  "
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+        for elem in elem:
+            indent_xml(elem, level + 1)
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+    else:
+        if level and (not elem.tail or not elem.tail.strip()):
+            elem.tail = i
+
+
 # Function to parse the XML file
 def parse_xml(file_path: str) -> etree.ElementTree:
     return etree.parse(file_path)
@@ -8,6 +24,7 @@ def parse_xml(file_path: str) -> etree.ElementTree:
 
 # Function to write to the XML file
 def write_xml(tree: etree.ElementTree, file_path: str) -> None:
+    indent_xml(tree.getroot())
     tree.write(file_path, pretty_print=True, xml_declaration=True, encoding='UTF-8')
 
 

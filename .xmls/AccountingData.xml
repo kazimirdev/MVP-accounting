@@ -7,7 +7,92 @@
       <AccountType>Debit</AccountType>
       <Balance>25000.00</Balance>
     </Account>
-    <Account><AccountID>2</AccountID><AccountName>OLX</AccountName><AccountType>Debit</AccountType><Balance>1500</Balance></Account><Account><AccountID>3</AccountID><AccountName>Alibaba</AccountName><AccountType>Debit</AccountType><Balance>19000</Balance></Account><Account><AccountID>4</AccountID><AccountName>Aliexpress Buyer</AccountName><AccountType>Credit</AccountType><Balance>500</Balance></Account><Account><AccountID>5</AccountID><AccountName>Allegro Buyer</AccountName><AccountType>Credit</AccountType><Balance>3500</Balance></Account><Account><AccountID>6</AccountID><AccountName>Olx Buyer</AccountName><AccountType>Credit</AccountType><Balance>200</Balance></Account></Accounts>
+    <Account>
+      <AccountID>2</AccountID>
+      <AccountName>OLX</AccountName>
+      <AccountType>Debit</AccountType>
+      <Balance>1500</Balance>
+    </Account>
+    <Account>
+      <AccountID>3</AccountID>
+      <AccountName>Alibaba</AccountName>
+      <AccountType>Debit</AccountType>
+      <Balance>19000</Balance>
+    </Account>
+    <Account>
+      <AccountID>4</AccountID>
+      <AccountName>Aliexpress Buyer</AccountName>
+      <AccountType>Credit</AccountType>
+      <Balance>500</Balance>
+    </Account>
+    <Account>
+      <AccountID>5</AccountID>
+      <AccountName>Allegro Buyer</AccountName>
+      <AccountType>Credit</AccountType>
+      <Balance>3500</Balance>
+    </Account>
+    <Account>
+      <AccountID>6</AccountID>
+      <AccountName>Olx Buyer</AccountName>
+      <AccountType>Credit</AccountType>
+      <Balance>200</Balance>
+    </Account>
+    <Account>
+      <AccountID>7</AccountID>
+      <AccountName>ABW</AccountName>
+      <AccountType>Debit</AccountType>
+      <Balance>20000</Balance>
+    </Account>
+  </Accounts>
   <Transactions>
-    </Transactions>
+    <Transaction>
+      <TransactionID>0</TransactionID>
+      <Date>2007-10-10</Date>
+      <Description>For Xiaomi</Description>
+      <Amount>1200</Amount>
+      <AccountID>2</AccountID>
+      <Type>Buy</Type>
+    </Transaction>
+    <Transaction>
+      <TransactionID>1</TransactionID>
+      <Date>2007-10-10</Date>
+      <Description>For Honor 7x</Description>
+      <Amount>300</Amount>
+      <AccountID>4</AccountID>
+      <Type>Buy</Type>
+    </Transaction>
+    <Transaction>
+      <TransactionID>2</TransactionID>
+      <Date>2007-10-10</Date>
+      <Description>Honor 10</Description>
+      <Amount>500</Amount>
+      <AccountID>5</AccountID>
+      <Type>Buy</Type>
+    </Transaction>
+    <Transaction>
+      <TransactionID>3</TransactionID>
+      <Date>2017-10-23</Date>
+      <Description>Honor 11</Description>
+      <Amount>575</Amount>
+      <AccountID>2</AccountID>
+      <Type>Buy</Type>
+    </Transaction>
+    <Transaction>
+      <TransactionID>4</TransactionID>
+      <Date>2017-10-23</Date>
+      <Description>Macbook 2012</Description>
+      <Amount>200</Amount>
+      <AccountID>1</AccountID>
+      <Type>Sell</Type>
+    </Transaction>
+    <Transaction>
+      <TransactionID>5</TransactionID>
+      <Date>2018-10-23</Date>
+      <Description>For wheels</Description>
+      <Amount>100</Amount>
+      <AccountID>1</AccountID>
+      <Type>Sell</Type>
+    </Transaction>
+  </Transactions>
 </AccountingData>
+
