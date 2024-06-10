@@ -1,4 +1,4 @@
-# ZETO:ksiegowość
+# MVP:ksiegowość
 
 ## Opis:
 
@@ -15,7 +15,7 @@ Projekt samotestowy wykonany dla CV, wykazujący umiejętność pracy w technolo
 ## Instalacja:
 
 0. Otworz terminal z sh (bash, zsh, dash, itp.)
-1. Sklonuj repozytorium komandą ```git clone https://github.com/kazimirdev/ZETO-ksi-gowo-.git ZETOkazimirdev```
+1. Sklonuj repozytorium komandą ```git clone https://github.com/kazimirdev/MVP-accounting.git ZETOkazimirdev```
 2. Otworź nowej dyrektorii komandą ```cd ZETOkazimirdev```
 3. Zainstaluj wymagane biblioteki komandą ```pip install -r requirements.txt```
 4. Uruchom aplikację komandą ```python3 app.py```
