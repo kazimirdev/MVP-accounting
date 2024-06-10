@@ -25,6 +25,12 @@
       <AccountType>Praca</AccountType>
       <Balance>3000</Balance>
     </Account>
+    <Account>
+      <AccountID>4</AccountID>
+      <AccountName>ZETO Koszalin</AccountName>
+      <AccountType>Praca</AccountType>
+      <Balance>110500.0</Balance>
+    </Account>
   </Accounts>
   <Transactions>
     <Transaction>
@@ -66,6 +72,22 @@
       <Amount>45</Amount>
       <AccountID>0</AccountID>
       <Type>debit</Type>
+    </Transaction>
+    <Transaction>
+      <TransactionID>5</TransactionID>
+      <Date>2024-06-10</Date>
+      <Description>Opracowanie Programu</Description>
+      <Amount>5555</Amount>
+      <AccountID>4</AccountID>
+      <Type>debit</Type>
+    </Transaction>
+    <Transaction>
+      <TransactionID>6</TransactionID>
+      <Date>2024-06-11</Date>
+      <Description>Sprzedaź programu</Description>
+      <Amount>15555</Amount>
+      <AccountID>4</AccountID>
+      <Type>credit</Type>
     </Transaction>
   </Transactions>
 </AccountingData>
