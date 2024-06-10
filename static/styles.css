@@ -1,28 +1,67 @@
-#accountMenu {
-    display: none;
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
 }
 
-#allTransactionsList {
-    margin-left: 5%;
+h1, h2, h3 {
+    color: #4d4d4d;
 }
 
-.tabcontent {
-    display: none;
-}
-
-.tabCreateAccount {
-    background-color: #555;
+button {
+    background-color: #8dc63f;
     color: white;
-    cursor: pointer;
-    padding: 14px 16px;
-    font-size: 17px;
-    width: 25%;
-    text-align: center;
-    margin-right: 1px;
-    float: left;
     border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
-.tablink:hover {
-    background-color: #000;
+button:hover {
+    background-color: #7bb335;
+}
+
+#accountBalances {
+    background-color: #e6e6e6;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+#accountMenu, #accountTransactions {
+    background-color: #e6e6e6;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 4px;
+}
+
+#accountTransactionsList div {
+    background-color: #c6c6c6;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+#deleteAccountButton {
+    position: absolute;
+    right: 20px;
+}
+
+form {
+    background-color: #e6e6e6;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+input[type=text], input[type=date], input[type=number], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }

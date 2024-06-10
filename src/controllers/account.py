@@ -22,7 +22,6 @@ def get_accounts():
             'AccountType': account.findtext('AccountType'),
             'Balance': account.findtext('Balance')
         })
-    print(accounts)
     return jsonify(accounts)
 
 
@@ -69,4 +68,20 @@ def delete_account(account_id: int):
 
             write_xml(tree, xml_file)
             return jsonify({'message': f'Account ID {account_id} and associated transactions deleted.'})
+    return jsonify({'message': f'Account ID {account_id} not found.'}), 404
+
+
+@account_bp.route('/<int:account_id>', methods=['PUT'])
+def update_account_balance(account_id: int):
+    new_balance = request.args.get('balance')
+    tree = parse_xml(xml_file)
+    root = tree.getroot()
+    accounts_element = root.find('Accounts')
+
+    for account in accounts_element.findall('Account'):
+        if account.findtext('AccountID') == str(account_id):
+            account.find('Balance').text = str(new_balance)
+            write_xml(tree, xml_file)
+            return jsonify({'message': f'Account ID {account_id} balance updated.'})
+
     return jsonify({'message': f'Account ID {account_id} not found.'}), 404

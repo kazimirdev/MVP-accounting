@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accounting App</title>
+    <title>MVP:księgowość</title>
     <link rel="stylesheet" type="text/css" href="static/styles.css">
 </head>
 <body>
-    <h1>Accounting Data Management</h1>
-    <h2>Accounts</h2>
-    <hr>
-    <button class="tabCreateAccount" onclick="toggleForm('CreateAccount')">Create Account</button>
+    <h1>MVP:księgowość</h1>
+    <div id="accountBalances" style="float: right;"></div>
+    <h2>Konta</h2>
+    <button class="tabCreateAccount" onclick="toggleForm('CreateAccount')">Utworż konto</button>
     <div id="CreateAccount" class="tabcontent">
         <br>
         <br>
-        <br>
+
         <form id="create-account-form" method="post">
-            <label for="account-name">Account Name:</label><br>
+            <label for="account-name">Nazwa:</label><br>
             <input type="text" id="account-name" name="account-name"><br>
-            <label for="account-type">Account Type:</label><br>
+            <label for="account-type">Typ:</label><br>
             <input type="text" id="account-type" name="account-type"><br>
-            <label for="balance">Balance:</label><br>
+            <label for="balance">Saldo:</label><br>
             <input type="text" id="balance" name="balance"><br><br>
-            <button type="button" onclick="createAccount()">Create Account</button>
+            <button type="button" onclick="createAccount()">Utworż</button>
         </form>
     </div>
 
@@ -31,35 +31,36 @@
     <br>
 
     <select id="accountSelector" onchange="openAccountMenuAndFetchTransactions()">
-        <option value="">Select an account</option>
+        <option value="">Wybierż konto</option>
     </select>
 
     <div id="accountMenu">
-        <h3>Account Menu</h3>
-        <button class="tabCreateTransaction" onclick="toggleForm('CreateTransaction')">New Transaction</button>
+        <h3>Kontrola konta</h3>
+        <button id="deleteAccountButton" onclick="deleteSelectedAccount()">Delete Account</button>
+
         <div id="CreateTransaction" class="tabcontent">
-            <br>
-            <br>
-            <br>
             <form id="create-transaction-form" method="post">
-                <label for="transaction-date">Date:</label><br>
+                <label for="transaction-date">Data:</label><br>
                 <input type="date" id="transaction-date" name="transaction-date"><br>
-                <label for="transaction-description">Description:</label><br>
+                <label for="transaction-description">Opis:</label><br>
                 <input type="text" id="transaction-description" name="transaction-description"><br>
-                <label for="transaction-amount">Amount:</label><br>
+                <label for="transaction-amount">Koszt:</label><br>
                 <input type="number" id="transaction-amount" name="transaction-amount"><br>
-                <label for="transaction-type">Type:</label><br>
-                <input type="text" id="transaction-type" name="transaction-type"><br><br>
-                <button type="button" onclick="createAccountTransaction()">Create Transaction</button>
+                <label for="transaction-type">Typ:</label><br>
+                <select id="transaction-type" name="transaction-type">
+                    <option value="debit">Kupno</option>
+                    <option value="credit">Sprzedaź</option>
+                </select><br><br>
+                <button type="button" onclick="createAccountTransaction()">Utworź transakcję</button>
             </form>
         </div>
-        <button onclick="fetchAccountTransactions()">View Transactions</button>
-        <button onclick="deleteSelectedAccount()">Delete Account</button>
-        <!-- You can add more buttons here for additional functionalities like updating an account -->
     </div>
 
-    <h2>All Transactions</h2>
-    <ul id="allTransactionsList"></ul>
+    <div id="accountTransactions">
+        <h2>Account Transactions</h2>
+        <div id="accountTransactionsList"></div>
+    </div>
+
     <script>
         function clearFields() {
             document.getElementById('transaction-date').value = '';
@@ -78,32 +79,94 @@
         }
 
 
-        function fetchAccounts() {fetch('/account')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch accounts');
-                }
-                return response.json();
-                })
-                .then(data => {
-                const accountSelector = document.getElementById('accountSelector');
-                accountSelector.innerHTML = '<option value="">Select an account</option>';
-                data.forEach(account => {
-                    const option = document.createElement('option');
-                    option.value = account.AccountID;
-                    option.textContent = `ID: ${account.AccountID}, Name: ${account.AccountName}`;
-                    accountSelector.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching accounts:', error);
+        function fetchAccounts() {
+    fetch('/account')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch accounts');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const accountSelector = document.getElementById('accountSelector');
+            const accountBalances = document.getElementById('accountBalances');
+            accountSelector.innerHTML = '<option value="">Select an account</option>';
+            accountBalances.innerHTML = '';
+            data.forEach(account => {
+                const option = document.createElement('option');
+                option.value = account.AccountID;
+                option.textContent = `ID: ${account.AccountID}, Name: ${account.AccountName}`;
+                accountSelector.appendChild(option);
+
+                const balanceDiv = document.createElement('div');
+                balanceDiv.textContent = `ID: ${account.AccountID}, Name: ${account.AccountName}, Balance: ${account.Balance}`;
+                accountBalances.appendChild(balanceDiv);
             });
-        }
+        })
+        .catch(error => {
+            console.error('Error fetching accounts:', error);
+        });
+}
+
+function fetchAccountTransactions() {
+    const accountSelector = document.getElementById('accountSelector');
+    const accountId = accountSelector.value;
+    const transactionsList = document.getElementById('accountTransactionsList');
+    transactionsList.innerHTML = '';
+
+    let fetchUrl = '/transaction';
+    if (accountId) {
+        // If an account is selected, fetch only the transactions of the selected account
+        fetchUrl += `?accountID=${accountId}`;
+    } else {
+        fetchUrl += fetchTransactions();
+    }
+
+    fetch(fetchUrl)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(transaction => {
+                // Create a new div for the transaction
+                const transactionDiv = document.createElement('div');
+                transactionDiv.textContent = `ID: ${transaction.TransactionID}, Date: ${transaction.Date}, Description: ${transaction.Description}, Amount: ${transaction.Amount}, Account ID: ${transaction.AccountID}, Type: ${transaction.Type}`;
+
+                // Create buttons for the transaction
+                const breakLine = document.createElement('br');
+                transactionDiv.appendChild(breakLine);
+
+                const deleteTransactionButton = document.createElement('button');
+                deleteTransactionButton.textContent = 'Delete Transaction';
+
+deleteTransactionButton.onclick = function() {
+    const transactionId = transaction.TransactionID;
+
+    // Delete the transaction
+    fetch(`/transaction/${transactionId}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+
+        // Refresh the account balances and transactions
+        fetchAccounts();
+        fetchTransactions();
+        // Send notification
+        alert('Transaction deleted and account balances and transactions updated.');
+    });
+};
+                transactionDiv.appendChild(deleteTransactionButton);
+                transactionsList.appendChild(transactionDiv);
+            });
+            transactionsList.style.display = 'block';
+        });
+}
+
         function fetchTransactions() {
             fetch('/transaction')
                 .then(response => response.json())
                 .then(data => {
-                    const transactionsList = document.getElementById('allTransactionsList');
+                    const transactionsList = document.getElementById('accountTransactionsList');
                     transactionsList.innerHTML = '';
                     data.forEach(transaction => {
                         const li = document.createElement('li');
@@ -118,23 +181,7 @@
             accountMenu.style.display = 'block';
         }
 
-        function fetchAccountTransactions() {
-            const accountSelector = document.getElementById('accountSelector');
-            const accountId = accountSelector.value;
-            const transactionsList = document.getElementById('allTransactionsList');
-            transactionsList.innerHTML = '';
-            if (accountId) {
-                fetch(`/transaction?account_id=${accountId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(transaction => {
-                            const li = document.createElement('li');
-                            li.textContent = `ID: ${transaction.TransactionID}, Date: ${transaction.Date}, Description: ${transaction.Description}, Amount: ${transaction.Amount}, Account ID: ${transaction.AccountID}, Type: ${transaction.Type}`;
-                            transactionsList.appendChild(li);
-                        });
-                    });
-            }
-        }
+        let areTransactionsDisplayed = false;
 
         function createAccountTransaction() {
             const accountId = document.getElementById('accountSelector').value;
@@ -154,22 +201,24 @@
             .then(data => {
                 alert(`${data.message} New Transaction ID: ${data.TransactionID}`);
                 fetchAccountTransactions();
+                fetchAccounts();
                 clearFields();
             });
         }
 
         function openAccountMenuAndFetchTransactions() {
-            const accountSelector = document.getElementById('accountSelector');
-            const accountId = accountSelector.value;
-            const accountMenu = document.getElementById('accountMenu');
+    const accountSelector = document.getElementById('accountSelector');
+    const accountId = accountSelector.value;
+    const accountMenu = document.getElementById('accountMenu');
 
-            if (accountId === "") {
-                accountMenu.style.display = 'none';
-            } else {
-                openAccountMenu();
-                fetchAccountTransactions();
-            }
-        }
+    if (accountId === "") {
+        accountMenu.style.display = 'none';
+        fetchTransactions(); // Fetch all transactions when "Select an account" is chosen
+    } else {
+        openAccountMenu();
+        fetchAccountTransactions(); // Fetch only the transactions of the chosen account
+    }
+}
 
         function deleteSelectedAccount() {
             const accountSelector = document.getElementById('accountSelector');
@@ -199,7 +248,8 @@
             .then(data => {
                 alert(`${data.message}`);
                 fetchAccounts();
-                clearFields();
+                fetchTransactions();
+                                clearFields();
             });
         }
 
@@ -215,15 +265,14 @@
                 }).then(response => response.json())
                 .then(data => {
                     alert(`${data.message} New Transaction ID: ${data.TransactionID}`);
-                    fetchTransactions();
-                });
+                fetchAccounts();
+                fetchTransactions();                });
         }
         window.onload = function() {
                 fetchAccounts();
                 fetchTransactions();
             };
     </script>
-
 
 </body>
 </html>
