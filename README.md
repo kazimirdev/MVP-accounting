@@ -2,7 +2,7 @@
 
 ## Opis:
 
-Projekt samotestowy wykonany dla CV wysłanego ZETO, wykazujący umiejętność pracy w technologiach XML, FrontEnd (HTML + CSS + JS) a tak że Flask.
+Projekt samotestowy wykonany dla CV, wykazujący umiejętność pracy w technologiach XML, FrontEnd (HTML + CSS + JS) a tak że Flask.
 
 ## Wymagania:
 
