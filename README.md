@@ -8,7 +8,7 @@ Projekt samotestowy wykonany dla CV, wykazujący umiejętność pracy w technolo
 
 - Python 3.8
 - Git
-- sh (bash, zsh, dash, itp.)
+- sh (bash, zsh, dash, itp. Wymogany dla instukcji instalacji)
 - Flask (będzie zainstalowany automatycznie)
 - LXML (będzie zainstalowany automatycznie)
 
