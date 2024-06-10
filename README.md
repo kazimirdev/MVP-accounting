@@ -21,3 +21,5 @@ Projekt samotestowy wykonany dla CV wysłanego ZETO, wykazujący umiejętność 
 4. Uruchom aplikację komandą ```python3 app.py```
 5. Otwórz przeglądarkę i wpisz ```http://127.0.0.1:5000/```
 6. Użyj aplikację :)
+
+Przykłady użycia programu są w dyrekorii screenshots.
