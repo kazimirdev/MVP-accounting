@@ -7,15 +7,17 @@ Projekt samotestowy wykonany dla CV wysłanego ZETO, wykazujący umiejętność 
 ## Wymagania:
 
 - Python 3.8
+- Git
+- sh (bash, zsh, dash, itp.)
 - Flask (będzie zainstalowany automatycznie)
 - LXML (będzie zainstalowany automatycznie)
 
 ## Instalacja:
 
-1. Sklonuj repozytorium komandą "git clone https://github.com/kazimirdev/ZETO-ksi-gowo-.git ZETOkazimirdev"
-2. Otworź nowej dyrektorii komandą "cd "ZETOkazimirdev"
-3. Zainstaluj wymagane biblioteki komandą "pip install -r requirements.txt"
-4. Uruchom aplikację komandą "python app.py"
-5. Otwórz przeglądarkę i wpisz "http://127.0.0.1:5000/"
+0. Otworz terminal z sh (bash, zsh, dash, itp.)
+1. Sklonuj repozytorium komandą ```git clone https://github.com/kazimirdev/ZETO-ksi-gowo-.git ZETOkazimirdev```
+2. Otworź nowej dyrektorii komandą ```cd ZETOkazimirdev```
+3. Zainstaluj wymagane biblioteki komandą ```pip install -r requirements.txt```
+4. Uruchom aplikację komandą ```python3 app.py```
+5. Otwórz przeglądarkę i wpisz ```http://127.0.0.1:5000/```
 6. Użyj aplikację :)
-
