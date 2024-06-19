@@ -35,22 +35,31 @@
     </select>
 
     <div id="accountMenu">
-        <h3>Kontrola konta</h3>
-        <button id="deleteAccountButton" onclick="deleteSelectedAccount()">Delete Account</button>
-
+        <div class="account-header-container">
+            <h3>Kontrola konta</h3>
+            <button id="deleteAccountButton" onclick="deleteSelectedAccount()">Delete Account</button>
+        </div>
         <div id="CreateTransaction" class="tabcontent">
-            <form id="create-transaction-form" method="post">
-                <label for="transaction-date">Data:</label><br>
-                <input type="date" id="transaction-date" name="transaction-date"><br>
-                <label for="transaction-description">Opis:</label><br>
-                <input type="text" id="transaction-description" name="transaction-description"><br>
-                <label for="transaction-amount">Koszt:</label><br>
-                <input type="number" id="transaction-amount" name="transaction-amount"><br>
-                <label for="transaction-type">Typ:</label><br>
-                <select id="transaction-type" name="transaction-type">
-                    <option value="debit">Kupno</option>
-                    <option value="credit">Sprzedaź</option>
-                </select><br><br>
+            <form id="create-transaction-form" method="post" class="flex-container">
+                <div class="transaction-param-flex-item">
+                    <label for="transaction-date">Data:</label><br>
+                    <input type="date" id="transaction-date" name="transaction-date"><br>
+                </div>
+                <div class="flex-item">
+                    <label for="transaction-description">Opis:</label><br>
+                    <input type="text" id="transaction-description" name="transaction-description"><br>
+                </div>
+                <div class="transaction-param-flex-item">
+                    <label for="transaction-amount">Koszt:</label><br>
+                    <input type="number" id="transaction-amount" name="transaction-amount"><br>
+                </div>
+                <div class="transaction-param-flex-item">
+                    <label for="transaction-type">Typ:</label><br>
+                    <select id="transaction-type" name="transaction-type">
+                        <option value="debit">Kupno</option>
+                        <option value="credit">Sprzedaź</option>
+                    </select>
+                </div>
                 <button type="button" onclick="createAccountTransaction()">Utworź transakcję</button>
             </form>
         </div>
@@ -90,7 +99,7 @@
         .then(data => {
             const accountSelector = document.getElementById('accountSelector');
             const accountBalances = document.getElementById('accountBalances');
-            accountSelector.innerHTML = '<option value="">Select an account</option>';
+            accountSelector.innerHTML = '<option value="">Wybierż konto</option>';
             accountBalances.innerHTML = '';
             data.forEach(account => {
                 const option = document.createElement('option');
@@ -186,7 +195,7 @@ deleteTransactionButton.onclick = function() {
         function createAccountTransaction() {
             const accountId = document.getElementById('accountSelector').value;
             if (!accountId) {
-                alert('Please select an account first.');
+                alert('Spoczątku wybierź konto.');
                 return;
             }
             const date = document.getElementById('transaction-date').value;
@@ -213,7 +222,7 @@ deleteTransactionButton.onclick = function() {
 
     if (accountId === "") {
         accountMenu.style.display = 'none';
-        fetchTransactions(); // Fetch all transactions when "Select an account" is chosen
+        fetchTransactions(); // Fetch all transactions when "Wybierż konto" is chosen
     } else {
         openAccountMenu();
         fetchAccountTransactions(); // Fetch only the transactions of the chosen account

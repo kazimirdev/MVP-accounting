@@ -25,13 +25,27 @@ button:hover {
     background-color: #7bb335;
 }
 
+.account-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 #accountBalances {
     background-color: #e6e6e6;
     padding: 20px;
     border-radius: 4px;
 }
 
-#accountMenu, #accountTransactions {
+#accountMenu {
+    display: none;
+    background-color: #e6e6e6;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 4px;
+}
+
+#accountTransactions {
     background-color: #e6e6e6;
     padding: 20px;
     margin-top: 20px;
@@ -43,6 +57,23 @@ button:hover {
     padding: 10px;
     margin-top: 10px;
     border-radius: 4px;
+}
+
+#CreateAccount {
+    display: none;
+}
+
+.flex-container
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.transaction-param-flex-item {
+    flex: 1 0 25%;
+    padding: 10px;
+    display: inline-block;
+        column-count: 4;
+
 }
 
 #deleteAccountButton {
